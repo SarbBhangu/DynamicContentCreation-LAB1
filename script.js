@@ -6,6 +6,13 @@ addProductButton.addEventListener('click', () => {
   const name = productNameInput.value.trim();
   const price = Number(productPriceInput.value);
 
-  console.log('Name: ', name);
-  console.log('Price:', price);
+  if (!name || !price) return;
+
+  const li = document.createElement('li');
+  li.textContent = `${name} - $${price.toFixed(2)}`;
+
+  document.getElementById(`cart`).appendChild(li);
+
+  productNameInput.value = '';
+  productPriceInput.value = '';
 })
