@@ -15,7 +15,10 @@ addProductButton.addEventListener('click', () => {
   const name = productNameInput.value.trim();
   const price = Number(productPriceInput.value);
 
-  if (!name || !price) return;
+   if (!name) {
+    alert('Please enter a product name!');
+    return;
+  }
 
   const li = document.createElement('li');
     li.className = 'cart-item';
