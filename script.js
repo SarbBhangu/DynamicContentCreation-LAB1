@@ -2,6 +2,7 @@ const productNameInput = document.getElementById('product-name');
 const productPriceInput = document.getElementById('product-price');
 const addProductButton = document.getElementById('add-product');
 const totalPrice = document.querySelector(`#total-price`);
+const cart = document.getElementById(`cart`);
 
 let total = 0
 
@@ -17,13 +18,27 @@ addProductButton.addEventListener('click', () => {
   if (!name || !price) return;
 
   const li = document.createElement('li');
-  li.textContent = `${name} - $${price.toFixed(2)}`;
+    li.className = 'cart-item';
+    li.dataset.price = String(price);
+    li.innerHTML = `
+      <span class="name">${name}</span>
+      <span class="price">$${price.toFixed(2)}</span>
+      <button class="remove">Remove</button>
+  `;
 
-  document.getElementById(`cart`).appendChild(li);
-
+  cart.appendChild(li);
   updateTotal(price);
 
   productNameInput.value = '';
   productPriceInput.value = '';
 })
 
+cart.addEventListener(`click` , (e) => {
+  if (!e.target.classList.contains(`remove`)) return;
+
+  const li = e.target.closest(`li`);
+  const price = Number(li.dataset.price)|| 0;
+
+  updateTotal(-price);
+  li.remove();
+})
